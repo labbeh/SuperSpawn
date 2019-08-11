@@ -1,0 +1,8 @@
+[
+    {
+        "modid": "superspawnplugin",
+        "name": "SuperSpawnPlugin",
+        "version": "1.0.0",
+        "description": "Plugin permettant de definir un point de spawn au serveur et y acceder"
+    }
+]
