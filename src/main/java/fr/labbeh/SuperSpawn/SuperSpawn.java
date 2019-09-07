@@ -17,6 +17,11 @@ import fr.labbeh.SuperSpawn.commands.CommandSet;
 import fr.labbeh.SuperSpawn.commands.CommandSpawn;
 import fr.labbeh.SuperSpawn.files.FileUtility;
 
+/**
+ * Classe principale du plugin permettant de créer un point de spawn.
+ * @author labbeh
+ * @version 1.0.0
+ * */
 @Plugin(id = "superspawn", name = "SuperSpawn", authors = "labbeh")
 public class SuperSpawn {
 	/**

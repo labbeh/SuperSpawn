@@ -23,21 +23,11 @@ public class SpawnPoint {
 		this.z = z;
 	}
 	
-	public double getX() {
-		return x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public double getZ() {
-		return z;
-	}
-	
-	public String getWorld() {
-		return worldName;
-	}
+	/* ACCESSEURS */
+	public double getX() {return x;}
+	public double getY() {return y;}
+	public double getZ() {return z;}
+	public String getWorld() {return worldName;}
 
 	@Override
 	public String toString() {
