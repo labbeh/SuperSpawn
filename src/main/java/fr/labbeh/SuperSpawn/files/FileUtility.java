@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import fr.labbeh.SuperSpawn.SpawnPoint;
 import fr.labbeh.SuperSpawn.SuperSpawn;
 
 /**
@@ -17,7 +18,7 @@ public class FileUtility {
 	/**
 	 * Chemin d'accès au dossier du/des fichier(s) de configuration
 	 * */
-	private static final String CONFIG_FOLDER_URL = "./SuperSpawnDatas";
+	public static final String CONFIG_FOLDER_URL = "./SuperSpawnDatas";
 	
 	/**
 	 * Chemin d'accès au fichier de configuration
@@ -49,34 +50,48 @@ public class FileUtility {
 		if(!configFolder.exists())configFolder.mkdir();
 		
 		// si le fichier de configuration existe on procède à sa lecture
-		if(configFile.exists()) {
-			System.out.println("Chargement du point de spawn...");
-			try {
-				Scanner sc = new Scanner(configFile);
-				sc.useDelimiter(";");
-				
-				String worldName = sc.next();
-				double x = Double.parseDouble(sc.next());
-				double y = Double.parseDouble(sc.next());
-				double z = Double.parseDouble(sc.next());
-				
-				sc.close();
-				
-				ctrl.setSpawn(worldName, x, y, z);
-			}
-			catch (Exception e) {System.out.println("Erreur: fichier de configuration invalide ou inaccessible");}
+		if(configFile.exists()) ctrl.setSpawn(loadPointFromFile(CONFIG_FILE_URL));
+	}
+	
+	/**
+	 * Permet de charger un point de spawn à partir d'un fichier
+	 * @param path chemin du fichier
+	 * */
+	public SpawnPoint loadPointFromFile(String path) {
+		File configFile = new File(path);
+		SpawnPoint point = null;
+		
+		try {
+			Scanner sc = new Scanner(configFile);
+			sc.useDelimiter(";");
+			
+			String worldName = sc.next();
+			double x = Double.parseDouble(sc.next());
+			double y = Double.parseDouble(sc.next());
+			double z = Double.parseDouble(sc.next());
+			
+			sc.close();
+			
+			point = new SpawnPoint(worldName, x, y, z);
 		}
-	} 
+		catch (Exception e) {
+			System.out.println("Erreur: fichier de configuration invalide ou inaccessible");
+		}
+		return point;
+	}
+	
 	
 	/**
 	 * Sauve sur disque les informations sur le point de spawn
+	 * @param path chemin du fichier
+	 * @param point point de spawn contenant les finfos à écrire sur disque
 	 * */
-	public void saveOnFile() {
+	public void saveOnFile(String path, SpawnPoint point) {
 		try {
-			FileWriter fw = new FileWriter(CONFIG_FILE_URL);
+			FileWriter fw = new FileWriter(path);
 			PrintWriter pw = new PrintWriter(fw);
 			
-			pw.print(ctrl.getSpawn().toString());
+			pw.print(point.toString());
 			
 			pw.close();
 			fw.close();
@@ -84,5 +99,10 @@ public class FileUtility {
 		catch (IOException e) {System.out.println("Erreur lors de l'écriture du fichier le point de spawn ne sera pas restauré "
 												+ "au redemarrage du serveur");
 		}
+	}
+	
+	/* RETROCOMPATIBILITE AVEC 1.0 */
+	public void saveOnFile() {
+		saveOnFile(CONFIG_FILE_URL, ctrl.getSpawn());
 	}
 }

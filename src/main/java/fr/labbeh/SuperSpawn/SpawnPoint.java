@@ -15,7 +15,7 @@ public class SpawnPoint {
 	private double y;
 	private double z;
 	
-	SpawnPoint(String worldName, double x, double y, double z) {
+	public SpawnPoint(String worldName, double x, double y, double z) {
 		super();
 		this.worldName = worldName;
 		this.x = x;
